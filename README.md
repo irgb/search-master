@@ -19,7 +19,7 @@ Watch our demo video to see Smart Search in action:
 
 Due to Chrome Web Store's policy restrictions regarding search provider URLs, this extension needs to be installed manually. Here's how:
 
-1. Go to the [Releases](https://github.com/irgb/smart-search/releases) page
+1. Go to the [Releases](https://github.com/irgb/smart-search/tags) page
 2. Download the source code (zip) from the latest release
 3. Extract the zip file to a folder on your computer
 4. Open Chrome and go to `chrome://extensions/`
