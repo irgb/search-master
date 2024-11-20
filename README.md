@@ -17,20 +17,16 @@ Watch our demo video to see Smart Search in action:
 
 ## Installation
 
-Due to Chrome Web Store's policy restrictions regarding search provider URLs, this extension is not available on the Chrome Web Store. However, you can still install it manually:
+Due to Chrome Web Store's policy restrictions regarding search provider URLs, this extension needs to be installed manually. Here's how:
 
 1. Go to the [Releases](https://github.com/irgb/smart-search/releases) page
-2. Download the latest `.crx` file
-3. Open Chrome and go to `chrome://extensions/`
-4. Enable "Developer mode" by toggling the switch in the top right corner
-5. Drag and drop the downloaded `.crx` file into the Chrome extensions page
+2. Download the source code (zip) from the latest release
+3. Extract the zip file to a folder on your computer
+4. Open Chrome and go to `chrome://extensions/`
+5. Enable "Developer mode" by toggling the switch in the top right corner
+6. Click "Load unpacked" and select the folder where you extracted the zip file
 
-Note: If you encounter any issues with `.crx` installation, you can also:
-1. Download the source code zip from the releases page
-2. Extract it to a folder
-3. Go to `chrome://extensions/`
-4. Enable "Developer mode"
-5. Click "Load unpacked" and select the extracted folder
+The extension should now be installed and ready to use!
 
 ## Usage
 
