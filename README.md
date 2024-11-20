@@ -1,40 +1,53 @@
-# Smart Search Chrome Extension
+# Smart Search
 
-A Chrome extension that intelligently routes your searches between ChatGPT and Google based on configurable rules.
+A Chrome extension that intelligently routes your searches between ChatGPT and Google based on your preferences, making web searches more efficient.
+
+## Demo
+
+Watch our demo video to see Smart Search in action:
+
+[![Smart Search Demo](https://img.youtube.com/vi/ELfigx8GHqU/0.jpg)](https://www.youtube.com/watch?v=ELfigx8GHqU)
 
 ## Features
 
-- Automatically routes searches to either ChatGPT or Google based on:
-  - Trigger keywords (e.g., "gpt", "chatgpt", "google")
-  - Query length threshold
-- User-friendly settings panel
-- Settings take effect immediately without browser restart
-- Customizable trigger keywords and word count threshold
+- Intelligent Search Routing: Automatically directs your queries to either ChatGPT or Google based on the nature of your search
+- Customizable Rules: Set your own preferences for when to use ChatGPT vs. Google
+- Seamless Integration: Works directly from your browser's search bar
+- Privacy-Focused: No data collection or tracking - all processing happens locally
 
 ## Installation
 
-1. Open Chrome and navigate to `chrome://extensions/`
-2. Enable "Developer mode" in the top right corner
-3. Click "Load unpacked" and select the extension directory
+Due to Chrome Web Store's policy restrictions regarding search provider URLs, this extension is not available on the Chrome Web Store. However, you can still install it manually:
+
+1. Go to the [Releases](https://github.com/irgb/smart-search/releases) page
+2. Download the latest `.crx` file
+3. Open Chrome and go to `chrome://extensions/`
+4. Enable "Developer mode" by toggling the switch in the top right corner
+5. Drag and drop the downloaded `.crx` file into the Chrome extensions page
+
+Note: If you encounter any issues with `.crx` installation, you can also:
+1. Download the source code zip from the releases page
+2. Extract it to a folder
+3. Go to `chrome://extensions/`
+4. Enable "Developer mode"
+5. Click "Load unpacked" and select the extracted folder
 
 ## Usage
 
-### Default Behavior
+1. After installation, type query in your Chrome address bar as usual
+2. The extension will automatically route your search to either ChatGPT or Google based on the query type
+3. Access settings through the extension icon in your toolbar to customize routing preferences
 
-- Queries starting with "gpt", "chatgpt", or "chat" go to ChatGPT
-- Queries starting with "google" or "g" go to Google
-- Queries with 6 or more words go to ChatGPT
-- Shorter queries go to Google
+## Privacy
 
-### Customizing Settings
+- All data processing happens locally in your browser
+- No user data is collected or stored except for your preferences
+- No analytics or tracking
 
-1. Click the extension icon in your Chrome toolbar
-2. Adjust the trigger keywords and word count threshold
-3. Click "Save Settings"
+## Support
 
-## Examples
+If you encounter any issues or have suggestions, please [open an issue](https://github.com/irgb/smart-search/issues) on GitHub.
 
-- "gpt explain quantum computing" → ChatGPT
-- "g weather today" → Google
-- "what is the meaning of life the universe and everything" → ChatGPT (> 6 words)
-- "pizza near me" → Google (< 6 words)
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
