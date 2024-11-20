@@ -6,7 +6,7 @@ A Chrome extension that intelligently routes your searches between ChatGPT and G
 
 Watch our demo video to see Smart Search in action:
 
-[![Smart Search Demo](https://img.youtube.com/vi/ELfigx8GHqU/0.jpg)](https://www.youtube.com/watch?v=ELfigx8GHqU)
+[![Smart Search Demo](./assets/smart%20search.png)](https://www.youtube.com/watch?v=ELfigx8GHqU)
 
 ## Features
 
