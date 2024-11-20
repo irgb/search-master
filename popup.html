@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Smart Search Settings</title>
+  <style>
+    body {
+      width: 400px;
+      padding: 20px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    }
+    
+    .container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    
+    .section {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    
+    label {
+      font-weight: 500;
+      color: #333;
+    }
+    
+    input[type="text"], input[type="number"] {
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    
+    input[type="number"] {
+      width: 80px;
+    }
+    
+    .help-text {
+      font-size: 12px;
+      color: #666;
+      margin-top: 4px;
+    }
+    
+    .save-button {
+      background-color: #2196F3;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      transition: background-color 0.2s;
+    }
+    
+    .save-button:hover {
+      background-color: #1976D2;
+    }
+    
+    .save-button:active {
+      background-color: #1565C0;
+    }
+    
+    .status {
+      display: none;
+      color: #4CAF50;
+      font-size: 14px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="section">
+      <h2>Smart Search Settings</h2>
+      <div class="input-group">
+        <label for="chatgptTriggers">ChatGPT Search Triggers</label>
+        <input type="text" id="chatgptTriggers">
+        <div class="help-text">Separate triggers with commas (e.g., gpt, chatgpt, chat)</div>
+      </div>
+      
+      <div class="input-group">
+        <label for="googleTriggers">Google Search Triggers</label>
+        <input type="text" id="googleTriggers">
+        <div class="help-text">Separate triggers with commas (e.g., google, g)</div>
+      </div>
+      
+      <div class="input-group">
+        <label for="wordThreshold">Word Count Threshold</label>
+        <input type="number" id="wordThreshold" min="1" max="100">
+        <div class="help-text">Use ChatGPT for queries with this many words or more</div>
+      </div>
+    </div>
+    
+    <button class="save-button">Save Settings</button>
+    <div class="status">Settings saved!</div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

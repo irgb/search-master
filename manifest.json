@@ -1,0 +1,42 @@
+{
+  "manifest_version": 3,
+  "name": "Smart Search",
+  "version": "1.0",
+  "description": "Intelligently routes searches between ChatGPT and Google based on configurable rules",
+  "permissions": [
+    "storage",
+    "webNavigation"
+  ],
+  "chrome_settings_overrides": {
+    "search_provider": {
+      "name": "Smart Search",
+      "keyword": "ss",
+      "is_default": true,
+      "encoding": "UTF-8",
+      "search_url": "https://www.google.com/search?q={searchTerms}",
+      "favicon_url": "https://www.google.com/favicon.ico",
+      "suggest_url": "https://www.google.com/complete/search?q={searchTerms}&client=chrome",
+      "new_tab_url": "https://www.google.com"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "host_permissions": [
+    "*://www.google.com/*",
+    "*://chatgpt.com/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}
