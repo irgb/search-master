@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Smart Search",
-  "version": "1.0",
+  "version": "1.1",
   "description": "Intelligently routes searches between ChatGPT and Google based on configurable rules",
   "permissions": [
     "storage",
