@@ -11,7 +11,7 @@ Watch our demo video to see Smart Search in action:
 ## Features
 
 - Intelligent Search Routing: Automatically directs your queries to either ChatGPT or Google based on the nature of your search
-- Customizable Rules: Set your own preferences for when to use ChatGPT vs. Google
+- Customizable Triggers: Set your own trigger keywords for both ChatGPT and Google searches, with support for multiple languages
 - Seamless Integration: Works directly from your browser's search bar
 - Privacy-Focused: No data collection or tracking - all processing happens locally
 
@@ -31,8 +31,35 @@ The extension should now be installed and ready to use!
 ## Usage
 
 1. After installation, type query in your Chrome address bar as usual
-2. The extension will automatically route your search to either ChatGPT or Google based on the query type
-3. Access settings through the extension icon in your toolbar to customize routing preferences
+2. The extension will automatically route your search to either ChatGPT or Google based on:
+   - Trigger keywords at the start of your query (e.g., "gpt ", "google ", "讲讲", "搜索")
+   - Word count threshold for queries without triggers
+
+### Setting Up Triggers
+
+1. Click the extension icon in your toolbar to access settings
+2. You'll see two sections for triggers:
+   - ChatGPT Search Triggers
+   - Google Search Triggers
+
+Each trigger should be on a new line. Spaces in triggers are highlighted (␣) for clarity. For example:
+
+ChatGPT triggers:
+```
+gpt␣
+chatgpt␣
+讲讲
+解释
+```
+
+Google triggers:
+```
+google␣
+g␣
+搜索
+```
+
+Note: Some triggers (like "gpt ") include a space at the end, which is important for English queries. Chinese triggers typically don't need spaces.
 
 ## Privacy
 

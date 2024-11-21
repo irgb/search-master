@@ -1,6 +1,6 @@
 // Default settings
 const DEFAULT_SETTINGS = {
-  chatgptTriggers: ['gpt ', 'chatgpt ', 'chat '],
+  chatgptTriggers: ['chat ', 'chatgpt '],
   googleTriggers: ['google ', 'g '],
   wordThreshold: 6
 };
@@ -9,43 +9,35 @@ const DEFAULT_SETTINGS = {
 const chatgptTriggersInput = document.getElementById('chatgptTriggers');
 const googleTriggersInput = document.getElementById('googleTriggers');
 const wordThresholdInput = document.getElementById('wordThreshold');
-const saveButton = document.querySelector('.save-button');
-const statusMessage = document.querySelector('.status');
 
-// Load settings when popup opens
-document.addEventListener('DOMContentLoaded', async () => {
-  const result = await chrome.storage.sync.get('settings');
-  const settings = result.settings || DEFAULT_SETTINGS;
-  
-  // Populate input fields
-  chatgptTriggersInput.value = settings.chatgptTriggers
-    .map(t => t.trim())
-    .join(', ');
-  googleTriggersInput.value = settings.googleTriggers
-    .map(t => t.trim())
-    .join(', ');
-  wordThresholdInput.value = settings.wordThreshold;
-});
+// Debounce function to avoid frequent saves
+function debounce(func, wait) {
+  let timeout;
+  return function executedFunction(...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+}
 
-// Save settings
-saveButton.addEventListener('click', async () => {
+// Save settings function
+async function saveSettings() {
   // Parse and validate input
   const chatgptTriggers = chatgptTriggersInput.value
-    .split(',')
-    .map(t => t.trim())
-    .filter(t => t)
-    .map(t => t.endsWith(' ') ? t : t + ' ');
+    .split('\n')
+    .filter(t => t.length > 0);
   
   const googleTriggers = googleTriggersInput.value
-    .split(',')
-    .map(t => t.trim())
-    .filter(t => t)
-    .map(t => t.endsWith(' ') ? t : t + ' ');
+    .split('\n')
+    .filter(t => t.length > 0);
   
   const wordThreshold = parseInt(wordThresholdInput.value, 10);
   
   if (isNaN(wordThreshold) || wordThreshold < 1) {
-    alert('Please enter a valid word threshold (minimum 1)');
+    wordThresholdInput.value = DEFAULT_SETTINGS.wordThreshold;
     return;
   }
   
@@ -57,10 +49,24 @@ saveButton.addEventListener('click', async () => {
   };
   
   await chrome.storage.sync.set({ settings });
+}
+
+// Create debounced save function
+const debouncedSave = debounce(saveSettings, 500);
+
+// Load settings when popup opens
+document.addEventListener('DOMContentLoaded', async () => {
+  const result = await chrome.storage.sync.get('settings');
+  const settings = result.settings || DEFAULT_SETTINGS;
   
-  // Show success message
-  statusMessage.style.display = 'block';
-  setTimeout(() => {
-    statusMessage.style.display = 'none';
-  }, 2000);
+  // Populate input fields
+  chatgptTriggersInput.value = settings.chatgptTriggers.join('\n');
+  googleTriggersInput.value = settings.googleTriggers.join('\n');
+  wordThresholdInput.value = settings.wordThreshold;
 });
+
+// Add auto-save listeners
+chatgptTriggersInput.addEventListener('input', debouncedSave);
+googleTriggersInput.addEventListener('input', debouncedSave);
+wordThresholdInput.addEventListener('input', debouncedSave);
+wordThresholdInput.addEventListener('change', debouncedSave);
