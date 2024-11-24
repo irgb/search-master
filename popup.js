@@ -2,7 +2,7 @@
 const DEFAULT_SETTINGS = {
   chatgptTriggers: ['chat ', 'chatgpt ', '解释', '讲讲'],
   googleTriggers: ['google ', 'g ', '搜索'],
-  wordThreshold: 6
+  wordThreshold: 10
 };
 
 // DOM elements

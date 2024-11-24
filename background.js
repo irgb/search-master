@@ -2,7 +2,7 @@
 const DEFAULT_SETTINGS = {
   chatgptTriggers: ['chat ', 'chatgpt ', '讲讲', '解释'],
   googleTriggers: ['google ', 'g ', '搜索'],
-  wordThreshold: 6
+  wordThreshold: 10
 };
 
 // Load settings from storage or use defaults
@@ -97,6 +97,9 @@ chrome.webNavigation.onBeforeNavigate.addListener(async (details) => {
     
     // Skip if already processed
     if (url.searchParams.get('redirected_by_smart_search')) return;
+
+    // If query comes from Google homepage (source=hp) or has spell correction (spell=1), continue using Google
+    if (url.searchParams.get('source') === 'hp' || url.searchParams.get('spell') === '1') return;
 
     const query = url.searchParams.get('q');
     if (!query) return;
