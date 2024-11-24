@@ -7,7 +7,7 @@ A Chrome extension that intelligently routes your searches between ChatGPT and G
 Here's how Smart Search works:
 
 Easily customize triggers and word threshold
-![Settings](./assets/screenshot-20241124-230051.png)
+![Settings](./assets/screenshot-20241124-225918.png)
 
 Watch our demo video to see Smart Search in action:
 
