@@ -7,17 +7,6 @@
     "storage",
     "webNavigation"
   ],
-  "chrome_settings_overrides": {
-    "search_provider": {
-      "name": "Smart Search",
-      "keyword": "ss",
-      "is_default": true,
-      "encoding": "UTF-8",
-      "search_url": "https://www.google.com/search?q={searchTerms}",
-      "favicon_url": "https://raw.githubusercontent.com/irgb/smart-search/main/icons/icon48.png",
-      "suggest_url": "https://www.google.com/complete/search?q={searchTerms}&client=chrome"
-    }
-  },
   "background": {
     "service_worker": "background.js"
   },

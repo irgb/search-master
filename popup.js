@@ -1,7 +1,7 @@
 // Default settings
 const DEFAULT_SETTINGS = {
-  chatgptTriggers: ['chat ', 'chatgpt '],
-  googleTriggers: ['google ', 'g '],
+  chatgptTriggers: ['chat ', 'chatgpt ', '解释', '讲讲'],
+  googleTriggers: ['google ', 'g ', '搜索'],
   wordThreshold: 6
 };
 
