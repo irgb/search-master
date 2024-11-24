@@ -9,9 +9,7 @@ Here's how Smart Search works:
 Easily customize triggers and word threshold
 ![Settings](./assets/screenshot-20241124-225918.png)
 
-Watch our demo video to see Smart Search in action:
-
-[![Smart Search Demo](./assets/smart%20search.png)](https://www.youtube.com/watch?v=ELfigx8GHqU)
+You can also watch our [demo video](https://www.youtube.com/watch?v=ELfigx8GHqU) to see Smart Search in action.
 
 ## Features
 
