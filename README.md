@@ -26,7 +26,7 @@ You can install Smart Search in two ways:
 
 ### Option 1: Chrome Web Store (Recommended)
 
-1. Visit the [Smart Search page](https://chrome.google.com/webstore/detail/smart-search/XXXXXXX) on the Chrome Web Store
+1. Visit the [Smart Search page](https://chromewebstore.google.com/detail/smart-search/afdjfknkcnildioigkobmbjakfnggolp) on the Chrome Web Store
 2. Click "Add to Chrome" to install the extension
 3. The extension will be automatically installed and ready to use
 
