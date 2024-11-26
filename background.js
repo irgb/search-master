@@ -98,8 +98,12 @@ chrome.webNavigation.onBeforeNavigate.addListener(async (details) => {
     // Skip if already processed
     if (url.searchParams.get('redirected_by_smart_search')) return;
 
-    // If query comes from Google homepage (source=hp) or has spell correction (spell=1), continue using Google
-    if (url.searchParams.get('source') === 'hp' || url.searchParams.get('spell') === '1') return;
+    // If query comes from Google homepage (source=hp), has spell correction (spell=1),
+    // or comes from Chrome's search box (sxsrf present), continue using Google
+    if (url.searchParams.get('source') === 'hp' || 
+        url.searchParams.get('spell') === '1' ||
+        url.searchParams.has('sxsrf') ||
+        url.searchParams.has('ved')) return;
 
     const query = url.searchParams.get('q');
     if (!query) return;
