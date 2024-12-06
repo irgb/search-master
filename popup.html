@@ -128,18 +128,18 @@
       </div>
 
       <div class="input-group">
-        <label for="wordThreshold">Word Count Threshold</label>
+        <label for="wordThreshold">Long Query Threshold</label>
+        <div class="help-text">Threshold for long queries.</div>
         <div style="display: flex; align-items: center; gap: 12px;">
           <input type="number" id="wordThreshold" min="1" max="100">
           <div style="display: flex; align-items: center;">
             <label style="margin-right: 8px;">Use</label>
-            <select id="defaultSearchEngine" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px;">
-              <option value="chatgpt">ChatGPT</option>
-              <option value="perplexity">Perplexity</option>
+            <select id="defaultAISearchEngine" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px;">
+              <option value="ChatGPT">ChatGPT</option>
+              <option value="Perplexity">Perplexity</option>
             </select>
           </div>
         </div>
-        <div class="help-text">Automatically switch to selected search engine for queries with this many words or more</div>
       </div>
 
       <div class="input-group">

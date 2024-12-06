@@ -5,7 +5,7 @@ const DEFAULT_SETTINGS = {
   perplexityTriggers: ['p ', 'pplx '],
   bingTriggers: ['b '],
   wordThreshold: 20,
-  defaultSearchEngine: 'chatgpt'
+  defaultAISearchEngine: 'ChatGPT'
 };
 
 // Load settings from storage or use defaults
@@ -80,16 +80,16 @@ async function processQuery(query) {
   }
 
   // Determine search engine based on rules
-  let searchEngine = settings.defaultSearchEngine || DEFAULT_SETTINGS.defaultSearchEngine;
+  let searchEngine = settings.defaultAISearchEngine || DEFAULT_SETTINGS.defaultAISearchEngine;
   
   if (hasChatGPTTrigger) {
-    searchEngine = 'chatgpt';
+    searchEngine = 'ChatGPT';
   } else if (hasPerplexityTrigger) {
-    searchEngine = 'perplexity';
+    searchEngine = 'Perplexity';
   } else if (hasBingTrigger) {
-    searchEngine = 'bing';
+    searchEngine = 'Bing';
   } else if (hasGoogleTrigger) {
-    searchEngine = 'google';
+    searchEngine = 'Google';
   } else {
     // Check word count - support all Unicode scripts
     const wordCount = countWords(cleanQuery);
@@ -98,7 +98,7 @@ async function processQuery(query) {
       wordCount, 
       threshold: settings.wordThreshold, 
       searchEngine,
-      defaultEngine: settings.defaultSearchEngine,
+      defaultEngine: settings.defaultAISearchEngine,
       text: cleanQuery 
     });
   }
@@ -132,11 +132,11 @@ chrome.webNavigation.onBeforeNavigate.addListener(async (details) => {
     const { cleanQuery, searchEngine } = await processQuery(query);
     
     let redirectUrl;
-    if (searchEngine === 'chatgpt') {
+    if (searchEngine === 'ChatGPT') {
       redirectUrl = `https://chatgpt.com/?q=${encodeURIComponent(cleanQuery)}&hints=search&ref=ext`;
-    } else if (searchEngine === 'perplexity') {
+    } else if (searchEngine === 'Perplexity') {
       redirectUrl = `https://www.perplexity.ai/search/new?q=${encodeURIComponent(cleanQuery)}&copilot=false&s=d`;
-    } else if (searchEngine === 'bing') {
+    } else if (searchEngine === 'Bing') {
       redirectUrl = `https://www.bing.com/search?q=${encodeURIComponent(cleanQuery)}`;
     } else {
       // Use Google search

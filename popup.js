@@ -5,7 +5,7 @@ const DEFAULT_SETTINGS = {
   perplexityTriggers: ['p ', 'pplx '],
   bingTriggers: ['b '],
   wordThreshold: 20,
-  defaultSearchEngine: 'chatgpt'
+  defaultAISearchEngine: 'ChatGPT'
 };
 
 // DOM elements
@@ -14,7 +14,15 @@ const googleTriggersInput = document.getElementById('googleTriggers');
 const perplexityTriggersInput = document.getElementById('perplexityTriggers');
 const bingTriggersInput = document.getElementById('bingTriggers');
 const wordThresholdInput = document.getElementById('wordThreshold');
-const defaultSearchEngineSelect = document.getElementById('defaultSearchEngine');
+const defaultAISearchEngineSelect = document.getElementById('defaultAISearchEngine');
+const thresholdHelpText = document.querySelector('.input-group .help-text');
+
+// Function to update help text
+function updateHelpText() {
+  const selectedEngine = defaultAISearchEngineSelect.value;
+  const threshold = wordThresholdInput.value;
+  thresholdHelpText.textContent = `Use ${selectedEngine} for queries having more than ${threshold} words.`;
+}
 
 // Debounce function to avoid frequent saves
 function debounce(func, wait) {
@@ -62,7 +70,7 @@ async function saveSettings() {
     perplexityTriggers,
     bingTriggers,
     wordThreshold,
-    defaultSearchEngine: defaultSearchEngineSelect.value
+    defaultAISearchEngine: defaultAISearchEngineSelect.value
   };
   
   await chrome.storage.sync.set({ settings });
@@ -82,7 +90,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   perplexityTriggersInput.value = (settings.perplexityTriggers || DEFAULT_SETTINGS.perplexityTriggers).join('\n');
   bingTriggersInput.value = (settings.bingTriggers || DEFAULT_SETTINGS.bingTriggers).join('\n');
   wordThresholdInput.value = settings.wordThreshold || DEFAULT_SETTINGS.wordThreshold;
-  defaultSearchEngineSelect.value = settings.defaultSearchEngine || DEFAULT_SETTINGS.defaultSearchEngine;
+  defaultAISearchEngineSelect.value = settings.defaultAISearchEngine || DEFAULT_SETTINGS.defaultAISearchEngine;
+  
+  // Update help text with initial values
+  updateHelpText();
 });
 
 // Add auto-save listeners
@@ -90,6 +101,15 @@ chatgptTriggersInput.addEventListener('input', debouncedSave);
 googleTriggersInput.addEventListener('input', debouncedSave);
 perplexityTriggersInput.addEventListener('input', debouncedSave);
 bingTriggersInput.addEventListener('input', debouncedSave);
-wordThresholdInput.addEventListener('input', debouncedSave);
-wordThresholdInput.addEventListener('change', debouncedSave);
-defaultSearchEngineSelect.addEventListener('change', debouncedSave);
+wordThresholdInput.addEventListener('input', () => {
+  debouncedSave();
+  updateHelpText();
+});
+wordThresholdInput.addEventListener('change', () => {
+  debouncedSave();
+  updateHelpText();
+});
+defaultAISearchEngineSelect.addEventListener('change', () => {
+  debouncedSave();
+  updateHelpText();
+});
