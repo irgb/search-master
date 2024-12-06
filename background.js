@@ -5,7 +5,8 @@ const DEFAULT_SETTINGS = {
   perplexityTriggers: ['p ', 'pplx '],
   bingTriggers: ['b '],
   wordThreshold: 20,
-  defaultAISearchEngine: 'ChatGPT'
+  defaultAISearchEngine: 'ChatGPT',
+  defaultSearchEngine: 'Google'
 };
 
 // Load settings from storage or use defaults
@@ -35,48 +36,52 @@ function countWords(text) {
   return cjkCount + nonCjkCount;
 }
 
-// Process query and determine target URL
+// Process query to determine search engine and clean query text
 async function processQuery(query) {
-  console.log('Processing query:', query);
   const settings = await getSettings();
-  
-  // Remove any leading/trailing whitespace but preserve internal spaces
   const trimmedQuery = query.trim();
-  const lowerQuery = trimmedQuery.toLowerCase();
-  
-  // Check for triggers
-  const hasChatGPTTrigger = matchesTrigger(lowerQuery, settings.chatgptTriggers);
-  const hasGoogleTrigger = matchesTrigger(lowerQuery, settings.googleTriggers);
-  const hasPerplexityTrigger = matchesTrigger(lowerQuery, settings.perplexityTriggers);
-  const hasBingTrigger = matchesTrigger(lowerQuery, settings.bingTriggers);
-  console.log('Trigger detection:', { hasChatGPTTrigger, hasGoogleTrigger, hasPerplexityTrigger, hasBingTrigger });
 
-  // Remove trigger prefix if present
+  // Check for triggers
   let cleanQuery = trimmedQuery;
-  if (hasChatGPTTrigger) {
-    const trigger = settings.chatgptTriggers.find(t => 
-      lowerQuery.startsWith(t.toLowerCase())
-    );
+  let hasChatGPTTrigger = false;
+  let hasPerplexityTrigger = false;
+  let hasBingTrigger = false;
+  let hasGoogleTrigger = false;
+
+  // Check ChatGPT triggers
+  const chatgptTriggers = settings.chatgptTriggers || DEFAULT_SETTINGS.chatgptTriggers;
+  const trigger = chatgptTriggers.find(t => trimmedQuery.startsWith(t));
+  if (trigger) {
+    hasChatGPTTrigger = true;
     cleanQuery = trimmedQuery.slice(trigger.length).trim();
     console.log('Removed ChatGPT trigger:', { originalQuery: trimmedQuery, cleanQuery, trigger });
-  } else if (hasGoogleTrigger) {
-    const trigger = settings.googleTriggers.find(t => 
-      lowerQuery.startsWith(t.toLowerCase())
-    );
-    cleanQuery = trimmedQuery.slice(trigger.length).trim();
-    console.log('Removed Google trigger:', { originalQuery: trimmedQuery, cleanQuery, trigger });
-  } else if (hasPerplexityTrigger) {
-    const trigger = settings.perplexityTriggers.find(t => 
-      lowerQuery.startsWith(t.toLowerCase())
-    );
-    cleanQuery = trimmedQuery.slice(trigger.length).trim();
-    console.log('Removed Perplexity trigger:', { originalQuery: trimmedQuery, cleanQuery, trigger });
-  } else if (hasBingTrigger) {
-    const trigger = settings.bingTriggers.find(t => 
-      lowerQuery.startsWith(t.toLowerCase())
-    );
-    cleanQuery = trimmedQuery.slice(trigger.length).trim();
-    console.log('Removed Bing trigger:', { originalQuery: trimmedQuery, cleanQuery, trigger });
+  }
+
+  // Check Perplexity triggers
+  const perplexityTriggers = settings.perplexityTriggers || DEFAULT_SETTINGS.perplexityTriggers;
+  const pplxTrigger = perplexityTriggers.find(t => trimmedQuery.startsWith(t));
+  if (pplxTrigger) {
+    hasPerplexityTrigger = true;
+    cleanQuery = trimmedQuery.slice(pplxTrigger.length).trim();
+    console.log('Removed Perplexity trigger:', { originalQuery: trimmedQuery, cleanQuery, trigger: pplxTrigger });
+  }
+
+  // Check Google triggers
+  const googleTriggers = settings.googleTriggers || DEFAULT_SETTINGS.googleTriggers;
+  const gTrigger = googleTriggers.find(t => trimmedQuery.startsWith(t));
+  if (gTrigger) {
+    hasGoogleTrigger = true;
+    cleanQuery = trimmedQuery.slice(gTrigger.length).trim();
+    console.log('Removed Google trigger:', { originalQuery: trimmedQuery, cleanQuery, trigger: gTrigger });
+  }
+
+  // Check Bing triggers
+  const bingTriggers = settings.bingTriggers || DEFAULT_SETTINGS.bingTriggers;
+  const bTrigger = bingTriggers.find(t => trimmedQuery.startsWith(t));
+  if (bTrigger) {
+    hasBingTrigger = true;
+    cleanQuery = trimmedQuery.slice(bTrigger.length).trim();
+    console.log('Removed Bing trigger:', { originalQuery: trimmedQuery, cleanQuery, trigger: bTrigger });
   }
 
   // Determine search engine based on rules
@@ -93,18 +98,18 @@ async function processQuery(query) {
   } else {
     // Check word count - support all Unicode scripts
     const wordCount = countWords(cleanQuery);
-    searchEngine = wordCount >= settings.wordThreshold ? searchEngine : 'google';
+    searchEngine = wordCount >= settings.wordThreshold ? searchEngine : (settings.defaultSearchEngine || DEFAULT_SETTINGS.defaultSearchEngine);
     console.log('Word count analysis:', { 
       wordCount, 
       threshold: settings.wordThreshold, 
       searchEngine,
-      defaultEngine: settings.defaultAISearchEngine,
+      defaultAIEngine: settings.defaultAISearchEngine,
       text: cleanQuery 
     });
   }
 
   console.log('Decision:', { searchEngine, cleanQuery });
-  return { cleanQuery, searchEngine };
+  return { searchEngine, cleanQuery };
 }
 
 // Handle URL changes
@@ -129,7 +134,7 @@ chrome.webNavigation.onBeforeNavigate.addListener(async (details) => {
     const query = url.searchParams.get('q');
     if (!query) return;
 
-    const { cleanQuery, searchEngine } = await processQuery(query);
+    const { searchEngine, cleanQuery } = await processQuery(query);
     
     let redirectUrl;
     if (searchEngine === 'ChatGPT') {

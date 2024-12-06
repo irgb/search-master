@@ -30,15 +30,13 @@
     .label-line {
       display: flex;
       align-items: center;
-      gap: 8px;
-      margin-bottom: 2px;
+      margin-bottom: 8px;
     }
     
-    label {
-      font-weight: 500;
-      color: #333;
-      white-space: nowrap;
-      margin-right: 6px;
+    .label-line label {
+      font-weight: 600;
+      color: #1a73e8;
+      font-size: 14px;
     }
     
     .examples {
@@ -77,13 +75,35 @@
     }
 
     .note {
-      background-color: #fff3cd;
-      border: 1px solid #ffeeba;
-      color: #856404;
-      padding: 6px;
-      margin: 6px 0;
+      background-color: #e8f0fe;
+      border-left: 4px solid #1a73e8;
       border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 20px;
+      font-size: 13px;
+      color: #444;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    .note strong {
+      color: #1a73e8;
+      display: block;
+      margin-bottom: 8px;
       font-size: 14px;
+    }
+
+    .note ol {
+      margin: 0;
+      padding-left: 20px;
+      line-height: 1.5;
+    }
+
+    .note li {
+      margin-bottom: 6px;
+    }
+
+    .note li:last-child {
+      margin-bottom: 0;
     }
     
     input[type="number"] {
@@ -97,7 +117,7 @@
     .help-text {
       font-size: 12px;
       color: #666;
-      margin-top: 4px;
+      margin-bottom: 8px;
       display: flex;
       gap: 4px;
       align-items: center;
@@ -123,13 +143,29 @@
       <h2>Smart Search Settings</h2>
       
       <div class="note">
-        <strong>Important:</strong> Triggers are matched as prefixes. For example, if you add "chat " (with a space), 
-        it will match "chat help" but not "chathelp". Be careful with spaces in your triggers!
+        <strong>Tips:</strong>
+        <ol>
+          <li>Query length: Short queries use the default search engine, while longer queries automatically use the selected AI search engine.</li>
+          <li>Trigger words: Type specific trigger words (e.g., "chat ") to force using a particular search engine regardless of query length.</li>
+        </ol>
       </div>
 
       <div class="input-group">
-        <label for="wordThreshold">Long Query Threshold</label>
-        <div class="help-text">Threshold for long queries.</div>
+        <div class="label-line">
+          <label for="defaultSearchEngine">Default Search Engine</label>
+        </div>
+        <div id="defaultSearchEngineHelp" class="help-text">For short queries.</div>
+        <select id="defaultSearchEngine" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px;">
+          <option value="Google">Google</option>
+          <option value="Bing">Bing</option>
+        </select>
+      </div>
+
+      <div class="input-group">
+        <div class="label-line">
+          <label for="wordThreshold">Long Query Threshold</label>
+        </div>
+        <div id="wordThresholdHelp" class="help-text">For queries having more than this many words, use the selected AI search engine below.</div>
         <div style="display: flex; align-items: center; gap: 12px;">
           <input type="number" id="wordThreshold" min="1" max="100">
           <div style="display: flex; align-items: center;">
@@ -146,7 +182,7 @@
         <div class="label-line">
           <label for="chatgptTriggers">ChatGPT Search Triggers</label>
         </div>
-        <div class="help-text">
+        <div id="chatgptTriggersHelp" class="help-text">
           Each trigger on a new line.
           <span class="examples">E.g.: "chat ", "解释"</span>
         </div>
@@ -157,7 +193,7 @@
         <div class="label-line">
           <label for="perplexityTriggers">Perplexity Search Triggers</label>
         </div>
-        <div class="help-text">
+        <div id="perplexityTriggersHelp" class="help-text">
           Each trigger on a new line.
           <span class="examples">E.g.: "p ", "pplx "</span>
         </div>
@@ -167,7 +203,7 @@
         <div class="label-line">
           <label for="googleTriggers">Google Search Triggers</label>
         </div>
-        <div class="help-text">
+        <div id="googleTriggersHelp" class="help-text">
           Each trigger on a new line.
           <span class="examples">E.g.: "g ", "搜索"</span>
         </div>
@@ -178,7 +214,7 @@
       <div class="label-line">
         <label for="bingTriggers">Bing Search Triggers</label>
       </div>
-      <div class="help-text">
+      <div id="bingTriggersHelp" class="help-text">
         Each trigger on a new line.
         <span class="examples">E.g.: "b "</span>
       </div>

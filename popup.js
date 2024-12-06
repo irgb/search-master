@@ -5,7 +5,8 @@ const DEFAULT_SETTINGS = {
   perplexityTriggers: ['p ', 'pplx '],
   bingTriggers: ['b '],
   wordThreshold: 20,
-  defaultAISearchEngine: 'ChatGPT'
+  defaultAISearchEngine: 'ChatGPT',
+  defaultSearchEngine: 'Google'
 };
 
 // DOM elements
@@ -15,13 +16,20 @@ const perplexityTriggersInput = document.getElementById('perplexityTriggers');
 const bingTriggersInput = document.getElementById('bingTriggers');
 const wordThresholdInput = document.getElementById('wordThreshold');
 const defaultAISearchEngineSelect = document.getElementById('defaultAISearchEngine');
-const thresholdHelpText = document.querySelector('.input-group .help-text');
+const defaultSearchEngineSelect = document.getElementById('defaultSearchEngine');
+const wordThresholdHelp = document.getElementById('wordThresholdHelp');
+const defaultSearchEngineHelp = document.getElementById('defaultSearchEngineHelp');
 
 // Function to update help text
-function updateHelpText() {
+function updateWordThresholdHelpText() {
   const selectedEngine = defaultAISearchEngineSelect.value;
-  const threshold = wordThresholdInput.value;
-  thresholdHelpText.textContent = `Use ${selectedEngine} for queries having more than ${threshold} words.`;
+  const threshold = wordThresholdInput.value || DEFAULT_SETTINGS.wordThreshold;
+  wordThresholdHelp.textContent = `For queries having more than ${threshold} words, use ${selectedEngine}.`;
+}
+
+function updateDefaultSearchEngineHelpText() {
+  const selectedEngine = defaultSearchEngineSelect.value;
+  defaultSearchEngineHelp.textContent = `for short queries, use ${selectedEngine}.`;
 }
 
 // Debounce function to avoid frequent saves
@@ -56,9 +64,10 @@ async function saveSettings() {
     .split('\n')
     .filter(t => t.length > 0);
   
-  const wordThreshold = parseInt(wordThresholdInput.value, 10);
+  const wordThreshold = wordThresholdInput.value === '' ? '' : parseInt(wordThresholdInput.value, 10);
   
-  if (isNaN(wordThreshold) || wordThreshold < 1) {
+  // Only validate if there's a value
+  if (wordThreshold !== '' && (isNaN(wordThreshold) || wordThreshold < 1)) {
     wordThresholdInput.value = DEFAULT_SETTINGS.wordThreshold;
     return;
   }
@@ -69,8 +78,9 @@ async function saveSettings() {
     googleTriggers,
     perplexityTriggers,
     bingTriggers,
-    wordThreshold,
-    defaultAISearchEngine: defaultAISearchEngineSelect.value
+    wordThreshold: wordThreshold === '' ? DEFAULT_SETTINGS.wordThreshold : wordThreshold,
+    defaultAISearchEngine: defaultAISearchEngineSelect.value,
+    defaultSearchEngine: defaultSearchEngineSelect.value
   };
   
   await chrome.storage.sync.set({ settings });
@@ -91,9 +101,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   bingTriggersInput.value = (settings.bingTriggers || DEFAULT_SETTINGS.bingTriggers).join('\n');
   wordThresholdInput.value = settings.wordThreshold || DEFAULT_SETTINGS.wordThreshold;
   defaultAISearchEngineSelect.value = settings.defaultAISearchEngine || DEFAULT_SETTINGS.defaultAISearchEngine;
+  defaultSearchEngineSelect.value = settings.defaultSearchEngine || DEFAULT_SETTINGS.defaultSearchEngine;
   
   // Update help text with initial values
-  updateHelpText();
+  updateWordThresholdHelpText();
+  updateDefaultSearchEngineHelpText();
 });
 
 // Add auto-save listeners
@@ -103,13 +115,17 @@ perplexityTriggersInput.addEventListener('input', debouncedSave);
 bingTriggersInput.addEventListener('input', debouncedSave);
 wordThresholdInput.addEventListener('input', () => {
   debouncedSave();
-  updateHelpText();
+  updateWordThresholdHelpText();
 });
 wordThresholdInput.addEventListener('change', () => {
   debouncedSave();
-  updateHelpText();
+  updateWordThresholdHelpText();
 });
 defaultAISearchEngineSelect.addEventListener('change', () => {
   debouncedSave();
-  updateHelpText();
+  updateWordThresholdHelpText();
+});
+defaultSearchEngineSelect.addEventListener('change', () => {
+  debouncedSave();
+  updateDefaultSearchEngineHelpText();
 });
