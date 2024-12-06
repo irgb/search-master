@@ -3,6 +3,7 @@ const DEFAULT_SETTINGS = {
   chatgptTriggers: ['chat ', '解释', '讲讲'],
   googleTriggers: ['g ', '搜索'],
   perplexityTriggers: ['p ', 'pplx '],
+  bingTriggers: ['b '],
   wordThreshold: 20,
   defaultSearchEngine: 'chatgpt'
 };
@@ -11,6 +12,7 @@ const DEFAULT_SETTINGS = {
 const chatgptTriggersInput = document.getElementById('chatgptTriggers');
 const googleTriggersInput = document.getElementById('googleTriggers');
 const perplexityTriggersInput = document.getElementById('perplexityTriggers');
+const bingTriggersInput = document.getElementById('bingTriggers');
 const wordThresholdInput = document.getElementById('wordThreshold');
 const defaultSearchEngineSelect = document.getElementById('defaultSearchEngine');
 
@@ -41,6 +43,10 @@ async function saveSettings() {
   const perplexityTriggers = perplexityTriggersInput.value
     .split('\n')
     .filter(t => t.length > 0);
+    
+  const bingTriggers = bingTriggersInput.value
+    .split('\n')
+    .filter(t => t.length > 0);
   
   const wordThreshold = parseInt(wordThresholdInput.value, 10);
   
@@ -54,6 +60,7 @@ async function saveSettings() {
     chatgptTriggers,
     googleTriggers,
     perplexityTriggers,
+    bingTriggers,
     wordThreshold,
     defaultSearchEngine: defaultSearchEngineSelect.value
   };
@@ -67,13 +74,14 @@ const debouncedSave = debounce(saveSettings, 500);
 // Load settings when popup opens
 document.addEventListener('DOMContentLoaded', async () => {
   const result = await chrome.storage.sync.get('settings');
-  const settings = result.settings || DEFAULT_SETTINGS;
+  const settings = result.settings || {};
   
-  // Populate input fields
-  chatgptTriggersInput.value = settings.chatgptTriggers.join('\n');
-  googleTriggersInput.value = settings.googleTriggers.join('\n');
-  perplexityTriggersInput.value = settings.perplexityTriggers.join('\n');
-  wordThresholdInput.value = settings.wordThreshold;
+  // Populate input fields with settings, falling back to defaults if not set
+  chatgptTriggersInput.value = (settings.chatgptTriggers || DEFAULT_SETTINGS.chatgptTriggers).join('\n');
+  googleTriggersInput.value = (settings.googleTriggers || DEFAULT_SETTINGS.googleTriggers).join('\n');
+  perplexityTriggersInput.value = (settings.perplexityTriggers || DEFAULT_SETTINGS.perplexityTriggers).join('\n');
+  bingTriggersInput.value = (settings.bingTriggers || DEFAULT_SETTINGS.bingTriggers).join('\n');
+  wordThresholdInput.value = settings.wordThreshold || DEFAULT_SETTINGS.wordThreshold;
   defaultSearchEngineSelect.value = settings.defaultSearchEngine || DEFAULT_SETTINGS.defaultSearchEngine;
 });
 
@@ -81,6 +89,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 chatgptTriggersInput.addEventListener('input', debouncedSave);
 googleTriggersInput.addEventListener('input', debouncedSave);
 perplexityTriggersInput.addEventListener('input', debouncedSave);
+bingTriggersInput.addEventListener('input', debouncedSave);
 wordThresholdInput.addEventListener('input', debouncedSave);
 wordThresholdInput.addEventListener('change', debouncedSave);
 defaultSearchEngineSelect.addEventListener('change', debouncedSave);

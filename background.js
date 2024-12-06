@@ -3,6 +3,7 @@ const DEFAULT_SETTINGS = {
   chatgptTriggers: ['chat ', '讲讲', '解释'],
   googleTriggers: ['g ', '搜索'],
   perplexityTriggers: ['p ', 'pplx '],
+  bingTriggers: ['b '],
   wordThreshold: 20,
   defaultSearchEngine: 'chatgpt'
 };
@@ -47,7 +48,8 @@ async function processQuery(query) {
   const hasChatGPTTrigger = matchesTrigger(lowerQuery, settings.chatgptTriggers);
   const hasGoogleTrigger = matchesTrigger(lowerQuery, settings.googleTriggers);
   const hasPerplexityTrigger = matchesTrigger(lowerQuery, settings.perplexityTriggers);
-  console.log('Trigger detection:', { hasChatGPTTrigger, hasGoogleTrigger, hasPerplexityTrigger });
+  const hasBingTrigger = matchesTrigger(lowerQuery, settings.bingTriggers);
+  console.log('Trigger detection:', { hasChatGPTTrigger, hasGoogleTrigger, hasPerplexityTrigger, hasBingTrigger });
 
   // Remove trigger prefix if present
   let cleanQuery = trimmedQuery;
@@ -69,6 +71,12 @@ async function processQuery(query) {
     );
     cleanQuery = trimmedQuery.slice(trigger.length).trim();
     console.log('Removed Perplexity trigger:', { originalQuery: trimmedQuery, cleanQuery, trigger });
+  } else if (hasBingTrigger) {
+    const trigger = settings.bingTriggers.find(t => 
+      lowerQuery.startsWith(t.toLowerCase())
+    );
+    cleanQuery = trimmedQuery.slice(trigger.length).trim();
+    console.log('Removed Bing trigger:', { originalQuery: trimmedQuery, cleanQuery, trigger });
   }
 
   // Determine search engine based on rules
@@ -78,6 +86,8 @@ async function processQuery(query) {
     searchEngine = 'chatgpt';
   } else if (hasPerplexityTrigger) {
     searchEngine = 'perplexity';
+  } else if (hasBingTrigger) {
+    searchEngine = 'bing';
   } else if (hasGoogleTrigger) {
     searchEngine = 'google';
   } else {
@@ -126,6 +136,8 @@ chrome.webNavigation.onBeforeNavigate.addListener(async (details) => {
       redirectUrl = `https://chatgpt.com/?q=${encodeURIComponent(cleanQuery)}&hints=search&ref=ext`;
     } else if (searchEngine === 'perplexity') {
       redirectUrl = `https://www.perplexity.ai/search/new?q=${encodeURIComponent(cleanQuery)}&copilot=false&s=d`;
+    } else if (searchEngine === 'bing') {
+      redirectUrl = `https://www.bing.com/search?q=${encodeURIComponent(cleanQuery)}`;
     } else {
       // Use Google search
       redirectUrl = `https://www.google.com/search?q=${encodeURIComponent(cleanQuery)}&redirected_by_smart_search=true`;

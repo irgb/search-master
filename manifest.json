@@ -14,7 +14,8 @@
   "host_permissions": [
     "*://www.google.com/*",
     "*://chatgpt.com/*",
-    "*://www.perplexity.ai/*"
+    "*://www.perplexity.ai/*",
+    "*://www.bing.com/*"
   ],
   "action": {
     "default_popup": "popup.html",
