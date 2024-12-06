@@ -3,7 +3,8 @@ const DEFAULT_SETTINGS = {
   chatgptTriggers: ['chat ', '解释', '讲讲'],
   googleTriggers: ['g ', '搜索'],
   perplexityTriggers: ['p ', 'pplx '],
-  wordThreshold: 20
+  wordThreshold: 20,
+  defaultSearchEngine: 'chatgpt'
 };
 
 // DOM elements
@@ -11,6 +12,7 @@ const chatgptTriggersInput = document.getElementById('chatgptTriggers');
 const googleTriggersInput = document.getElementById('googleTriggers');
 const perplexityTriggersInput = document.getElementById('perplexityTriggers');
 const wordThresholdInput = document.getElementById('wordThreshold');
+const defaultSearchEngineSelect = document.getElementById('defaultSearchEngine');
 
 // Debounce function to avoid frequent saves
 function debounce(func, wait) {
@@ -52,7 +54,8 @@ async function saveSettings() {
     chatgptTriggers,
     googleTriggers,
     perplexityTriggers,
-    wordThreshold
+    wordThreshold,
+    defaultSearchEngine: defaultSearchEngineSelect.value
   };
   
   await chrome.storage.sync.set({ settings });
@@ -71,6 +74,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   googleTriggersInput.value = settings.googleTriggers.join('\n');
   perplexityTriggersInput.value = settings.perplexityTriggers.join('\n');
   wordThresholdInput.value = settings.wordThreshold;
+  defaultSearchEngineSelect.value = settings.defaultSearchEngine || DEFAULT_SETTINGS.defaultSearchEngine;
 });
 
 // Add auto-save listeners
@@ -79,3 +83,4 @@ googleTriggersInput.addEventListener('input', debouncedSave);
 perplexityTriggersInput.addEventListener('input', debouncedSave);
 wordThresholdInput.addEventListener('input', debouncedSave);
 wordThresholdInput.addEventListener('change', debouncedSave);
+defaultSearchEngineSelect.addEventListener('change', debouncedSave);

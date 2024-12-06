@@ -3,7 +3,8 @@ const DEFAULT_SETTINGS = {
   chatgptTriggers: ['chat ', '讲讲', '解释'],
   googleTriggers: ['g ', '搜索'],
   perplexityTriggers: ['p ', 'pplx '],
-  wordThreshold: 20
+  wordThreshold: 20,
+  defaultSearchEngine: 'chatgpt'
 };
 
 // Load settings from storage or use defaults
@@ -71,7 +72,7 @@ async function processQuery(query) {
   }
 
   // Determine search engine based on rules
-  let searchEngine = 'google'; // default to google
+  let searchEngine = settings.defaultSearchEngine || DEFAULT_SETTINGS.defaultSearchEngine;
   
   if (hasChatGPTTrigger) {
     searchEngine = 'chatgpt';
@@ -82,11 +83,12 @@ async function processQuery(query) {
   } else {
     // Check word count - support all Unicode scripts
     const wordCount = countWords(cleanQuery);
-    searchEngine = wordCount >= settings.wordThreshold ? 'chatgpt' : 'google';
+    searchEngine = wordCount >= settings.wordThreshold ? searchEngine : 'google';
     console.log('Word count analysis:', { 
       wordCount, 
       threshold: settings.wordThreshold, 
       searchEngine,
+      defaultEngine: settings.defaultSearchEngine,
       text: cleanQuery 
     });
   }
