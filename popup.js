@@ -1,13 +1,15 @@
 // Default settings
 const DEFAULT_SETTINGS = {
-  chatgptTriggers: ['chat ', 'chatgpt ', '解释', '讲讲'],
-  googleTriggers: ['google ', 'g ', '搜索'],
-  wordThreshold: 10
+  chatgptTriggers: ['chat ', '解释', '讲讲'],
+  googleTriggers: ['g ', '搜索'],
+  perplexityTriggers: ['p ', 'pplx '],
+  wordThreshold: 20
 };
 
 // DOM elements
 const chatgptTriggersInput = document.getElementById('chatgptTriggers');
 const googleTriggersInput = document.getElementById('googleTriggers');
+const perplexityTriggersInput = document.getElementById('perplexityTriggers');
 const wordThresholdInput = document.getElementById('wordThreshold');
 
 // Debounce function to avoid frequent saves
@@ -33,6 +35,10 @@ async function saveSettings() {
   const googleTriggers = googleTriggersInput.value
     .split('\n')
     .filter(t => t.length > 0);
+    
+  const perplexityTriggers = perplexityTriggersInput.value
+    .split('\n')
+    .filter(t => t.length > 0);
   
   const wordThreshold = parseInt(wordThresholdInput.value, 10);
   
@@ -45,6 +51,7 @@ async function saveSettings() {
   const settings = {
     chatgptTriggers,
     googleTriggers,
+    perplexityTriggers,
     wordThreshold
   };
   
@@ -62,11 +69,13 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Populate input fields
   chatgptTriggersInput.value = settings.chatgptTriggers.join('\n');
   googleTriggersInput.value = settings.googleTriggers.join('\n');
+  perplexityTriggersInput.value = settings.perplexityTriggers.join('\n');
   wordThresholdInput.value = settings.wordThreshold;
 });
 
 // Add auto-save listeners
 chatgptTriggersInput.addEventListener('input', debouncedSave);
 googleTriggersInput.addEventListener('input', debouncedSave);
+perplexityTriggersInput.addEventListener('input', debouncedSave);
 wordThresholdInput.addEventListener('input', debouncedSave);
 wordThresholdInput.addEventListener('change', debouncedSave);

@@ -13,7 +13,8 @@
   },
   "host_permissions": [
     "*://www.google.com/*",
-    "*://chatgpt.com/*"
+    "*://chatgpt.com/*",
+    "*://www.perplexity.ai/*"
   ],
   "action": {
     "default_popup": "popup.html",

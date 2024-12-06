@@ -1,8 +1,9 @@
 // Default settings
 const DEFAULT_SETTINGS = {
-  chatgptTriggers: ['chat ', 'chatgpt ', '讲讲', '解释'],
-  googleTriggers: ['google ', 'g ', '搜索'],
-  wordThreshold: 10
+  chatgptTriggers: ['chat ', '讲讲', '解释'],
+  googleTriggers: ['g ', '搜索'],
+  perplexityTriggers: ['p ', 'pplx '],
+  wordThreshold: 20
 };
 
 // Load settings from storage or use defaults
@@ -13,7 +14,8 @@ async function getSettings() {
 
 // Check if text starts with any of the triggers
 function matchesTrigger(text, triggers) {
-  return triggers.some(trigger => text.startsWith(trigger));
+  const lowerText = text.toLowerCase();
+  return triggers.some(trigger => lowerText.startsWith(trigger.toLowerCase()));
 }
 
 // Count words in text - support all languages including CJK
@@ -43,7 +45,8 @@ async function processQuery(query) {
   // Check for triggers
   const hasChatGPTTrigger = matchesTrigger(lowerQuery, settings.chatgptTriggers);
   const hasGoogleTrigger = matchesTrigger(lowerQuery, settings.googleTriggers);
-  console.log('Trigger detection:', { hasChatGPTTrigger, hasGoogleTrigger });
+  const hasPerplexityTrigger = matchesTrigger(lowerQuery, settings.perplexityTriggers);
+  console.log('Trigger detection:', { hasChatGPTTrigger, hasGoogleTrigger, hasPerplexityTrigger });
 
   // Remove trigger prefix if present
   let cleanQuery = trimmedQuery;
@@ -59,47 +62,53 @@ async function processQuery(query) {
     );
     cleanQuery = trimmedQuery.slice(trigger.length).trim();
     console.log('Removed Google trigger:', { originalQuery: trimmedQuery, cleanQuery, trigger });
+  } else if (hasPerplexityTrigger) {
+    const trigger = settings.perplexityTriggers.find(t => 
+      lowerQuery.startsWith(t.toLowerCase())
+    );
+    cleanQuery = trimmedQuery.slice(trigger.length).trim();
+    console.log('Removed Perplexity trigger:', { originalQuery: trimmedQuery, cleanQuery, trigger });
   }
 
   // Determine search engine based on rules
-  let useChatGPT = false;
+  let searchEngine = 'google'; // default to google
   
   if (hasChatGPTTrigger) {
-    useChatGPT = true;
+    searchEngine = 'chatgpt';
+  } else if (hasPerplexityTrigger) {
+    searchEngine = 'perplexity';
   } else if (hasGoogleTrigger) {
-    useChatGPT = false;
+    searchEngine = 'google';
   } else {
     // Check word count - support all Unicode scripts
     const wordCount = countWords(cleanQuery);
-    useChatGPT = wordCount >= settings.wordThreshold;
+    searchEngine = wordCount >= settings.wordThreshold ? 'chatgpt' : 'google';
     console.log('Word count analysis:', { 
       wordCount, 
       threshold: settings.wordThreshold, 
-      useChatGPT,
+      searchEngine,
       text: cleanQuery 
     });
   }
 
-  console.log('Decision:', { useChatGPT, cleanQuery });
-  return { cleanQuery, useChatGPT };
+  console.log('Decision:', { searchEngine, cleanQuery });
+  return { cleanQuery, searchEngine };
 }
 
 // Handle URL changes
 chrome.webNavigation.onBeforeNavigate.addListener(async (details) => {
-  // Only handle main frame navigation to Google search
   if (details.frameId !== 0) return;
 
   try {
     const url = new URL(details.url);
     
-    // Only handle Google searches and avoid processing ChatGPT URLs
-    if (url.hostname !== 'www.google.com' || !url.pathname.startsWith('/search')) return;
-    
     // Skip if already processed
     if (url.searchParams.get('redirected_by_smart_search')) return;
 
-    // If query comes from Google homepage (source=hp), has spell correction (spell=1),
-    // or comes from Chrome's search box (sxsrf present), continue using Google
+    // Only handle Google searches
+    if (url.hostname !== 'www.google.com' || !url.pathname.startsWith('/search')) return;
+
+    // Skip if from Google homepage or Chrome's search box
     if (url.searchParams.get('source') === 'hp' || 
         url.searchParams.get('spell') === '1' ||
         url.searchParams.has('sxsrf') ||
@@ -108,18 +117,19 @@ chrome.webNavigation.onBeforeNavigate.addListener(async (details) => {
     const query = url.searchParams.get('q');
     if (!query) return;
 
-    const { cleanQuery, useChatGPT } = await processQuery(query);
+    const { cleanQuery, searchEngine } = await processQuery(query);
     
-    if (useChatGPT) {
-      // Redirect to ChatGPT
-      const chatgptUrl = `https://chatgpt.com/?q=${encodeURIComponent(cleanQuery)}&hints=search&ref=ext`;
-      chrome.tabs.update(details.tabId, { url: chatgptUrl });
+    let redirectUrl;
+    if (searchEngine === 'chatgpt') {
+      redirectUrl = `https://chatgpt.com/?q=${encodeURIComponent(cleanQuery)}&hints=search&ref=ext`;
+    } else if (searchEngine === 'perplexity') {
+      redirectUrl = `https://www.perplexity.ai/search/new?q=${encodeURIComponent(cleanQuery)}&copilot=false&s=d`;
     } else {
-      // Add processed flag to prevent loops
-      url.searchParams.set('q', cleanQuery);
-      url.searchParams.set('redirected_by_smart_search', 'true');
-      chrome.tabs.update(details.tabId, { url: url.toString() });
+      // Use Google search
+      redirectUrl = `https://www.google.com/search?q=${encodeURIComponent(cleanQuery)}&redirected_by_smart_search=true`;
     }
+    
+    chrome.tabs.update(details.tabId, { url: redirectUrl });
   } catch (error) {
     console.error('Error in Smart Search:', error);
   }

@@ -98,6 +98,9 @@
       font-size: 12px;
       color: #666;
       margin-top: 4px;
+      display: flex;
+      gap: 4px;
+      align-items: center;
     }
 
     .legend {
@@ -127,19 +130,34 @@
       <div class="input-group">
         <div class="label-line">
           <label for="chatgptTriggers">ChatGPT Search Triggers</label>
-          <span class="examples">E.g.: "chat " "解释"</span>
         </div>
-        <div class="help-text">Each trigger on a new line</div>
+        <div class="help-text">
+          Each trigger on a new line.
+          <span class="examples">E.g.: "chat ", "解释"</span>
+        </div>
         <textarea id="chatgptTriggers" spellcheck="false"></textarea>
       </div>
       
       <div class="input-group">
         <div class="label-line">
           <label for="googleTriggers">Google Search Triggers</label>
-          <span class="examples">E.g.: "google " "搜索"</span>
         </div>
-        <div class="help-text">Each trigger on a new line</div>
+        <div class="help-text">
+          Each trigger on a new line.
+          <span class="examples">E.g.: "g ", "搜索"</span>
+        </div>
         <textarea id="googleTriggers" spellcheck="false"></textarea>
+      </div>
+      
+      <div class="input-group">
+        <div class="label-line">
+          <label for="perplexityTriggers">Perplexity Search Triggers</label>
+        </div>
+        <div class="help-text">
+          Each trigger on a new line.
+          <span class="examples">E.g.: "p ", "pplx "</span>
+        </div>
+        <textarea id="perplexityTriggers" spellcheck="false"></textarea>
       </div>
       
       <div class="input-group">
