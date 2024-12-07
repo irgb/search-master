@@ -1,24 +1,22 @@
 # Smart Search
+![Cover](./assets/cover.png)
 
-A Chrome extension that intelligently routes your searches between ChatGPT and Google based on your preferences, making web searches more efficient.
-
-## Demo
-
-Here's how Smart Search works:
-
-Easily customize triggers and word threshold
-![Settings](./assets/screenshot-20241124-225918.png)
-
-You can also watch our [demo video](https://www.youtube.com/watch?v=ELfigx8GHqU) to see Smart Search in action.
+A Chrome extension that intelligently routes your searches between multiple search engines (Google, Bing, ChatGPT, Perplexity) based on your preferences, making web searches more efficient.
 
 ## Features
 
-- Intelligent Search Routing: Automatically directs your queries to either ChatGPT or Google based on the nature of your search
-- Multi-Language Support: Properly handles queries in various languages, including Chinese, Japanese, and Korean (CJK)
-- Auto-Save Settings: Settings are automatically saved as you type, no manual save required
-- Customizable Triggers: Set your own trigger keywords for both ChatGPT and Google searches
-- Seamless Integration: Works directly from your browser's search bar
-- Privacy-Focused: No data collection or tracking - all processing happens locally
+- **Multi-Engine Support**: Choose between multiple search engines including Google, Bing, ChatGPT, and Perplexity
+- **Smart Routing**: Automatically directs queries to traditional or AI search engines based on query length
+- **Customizable Triggers**: Set your own trigger keywords for each search engine
+- **Default Search Engine**: Select your preferred default search engine for short queries
+- **Multi-Language Support**: Properly handles queries in various languages, including Chinese, Japanese, and Korean (CJK)
+- **Auto-Save Settings**: Settings are automatically saved as you type
+- **Privacy-Focused**: No data collection or tracking - all processing happens locally
+
+## Demo
+![Demo](./assets/demo.png)
+
+You can also watch our [demo video](https://www.youtube.com/watch?v=ELfigx8GHqU) to see Smart Search in action.
 
 ## Installation
 
@@ -43,33 +41,42 @@ For developers or users who want to install from source:
 
 ## Usage
 
-1. After installation, type query in your Chrome address bar as usual
-2. The extension will automatically route your search to either ChatGPT or Google based on:
-   - Trigger keywords at the start of your query (e.g., "chat ", "google ", "讲讲", "搜索")
-   - Word count threshold for queries without triggers (default: 10 words)
+Smart Search provides two ways to choose your search engine:
 
-### Setting Up Triggers
+1. **Query Length Based Selection**:
+   - Short queries use your default search engine (Google or Bing)
+   - Longer queries automatically use your selected AI search engine (ChatGPT or Perplexity)
+   - The default threshold is 20 words - queries longer than this will use the AI search engine
+   - You can customize this threshold in the settings
 
-1. Click the extension icon in your toolbar to access settings
-2. You'll see two sections for triggers:
-   - ChatGPT Search Triggers
-   - Google Search Triggers
+2. **Trigger Word Based Selection**:
+   - Type specific trigger words (e.g., "chat ", "b ", "p ") to force using a particular search engine
+   - Each trigger should be on a new line in the settings
 
-Each trigger should be on a new line. Default triggers are:
+### Default Triggers
 
 ChatGPT triggers:
 ```
 chat 
-chatgpt 
 讲讲
 解释
 ```
 
+Perplexity triggers:
+```
+p 
+pplx 
+```
+
 Google triggers:
 ```
-google 
 g 
 搜索
+```
+
+Bing triggers:
+```
+b 
 ```
 
 Note: 
@@ -77,7 +84,7 @@ Note:
 - Chinese triggers typically don't need spaces
 - Settings are automatically saved as you type
 - Word count for non-English languages (like Chinese) is handled properly - each character is counted as a word
-- Queries from Google homepage or with spell corrections will stay on Google
+- Queries from search engine homepages or with spell corrections will stay on that search engine
 
 ## Privacy
 
