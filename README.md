@@ -46,7 +46,7 @@ Search Master provides two ways to choose your search engine:
 1. **Query Length Based Selection**:
    - Short queries use your default search engine (Google or Bing)
    - Longer queries automatically use your selected AI search engine (ChatGPT or Perplexity)
-   - The default threshold is 20 words - queries longer than this will use the AI search engine
+   - The default threshold is 10 words - queries longer than this will use the AI search engine
    - You can customize this threshold in the settings
 
 2. **Trigger Word Based Selection**:

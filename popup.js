@@ -4,7 +4,7 @@ const DEFAULT_SETTINGS = {
   googleTriggers: ['g ', '搜索'],
   perplexityTriggers: ['p ', 'pplx '],
   bingTriggers: ['b '],
-  wordThreshold: 20,
+  wordThreshold: 10,
   defaultAISearchEngine: 'ChatGPT',
   defaultSearchEngine: 'Google'
 };
