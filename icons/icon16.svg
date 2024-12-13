@@ -1,15 +1,37 @@
-<?xml version="1.0" encoding="utf-8"?>
-<svg width="16" height="16" viewBox="0 0 2354.4 2396.9" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="enable-background:new 0 0 2354.4 2396.9;" xml:space="preserve">
-<style type="text/css">
-	.st0{fill:#1A73E8;}
-	.st1{fill:#669DF3;}
-</style>
-<g>
-	<path class="st0" d="M2268.5,1896.8l-358.8-362.9l-409.1,414.8l358.8,362.9c111.8,113,294,113.9,406.9,2.1c0.7-0.7,1.4-1.4,2.1-2.1
-		C2383,2196.9,2383,2011.3,2268.5,1896.8L2268.5,1896.8z"/>
-	<path class="st1" d="M1762,306.2c-409.3-408.2-1071.8-408.2-1481.2,0C-103.4,719.3-92,1362.3,306.7,1761.5
-		c398.7,399.2,1041.7,411.5,1455.3,27.9C2171.6,1379.9,2171.6,715.8,1762,306.2C1762,306.2,1762,306.2,1762,306.2L1762,306.2z
-		 M1349.8,1377.3c-184.1,168.4-468.2,162.1-644.7-14.3c-176.5-176.4-183-460.4-14.8-644.7c184.1-168.4,468.2-162.1,644.7,14.3
-		C1511.6,909,1518.1,1193,1349.8,1377.3L1349.8,1377.3z"/>
-</g>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16" height="16" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+    <!-- 放大镜圆环 -->
+    <circle cx="55" cy="55" r="45" fill="none" stroke="#4285f4" stroke-width="20"/>
+    
+    <!-- 放大镜手柄 -->
+    <line x1="90" y1="90" x2="118" y2="118" stroke="#4285f4" stroke-width="20" stroke-linecap="round"/>
+    
+    <!-- 分叉箭头 - 在圆环内部，调整大小和位置 -->
+    <g transform="translate(28, 28) scale(3.5)">
+        <path d="M64 20 L64 50 L48 50 L48 108 L80 108 L80 50 L64 50" fill="#fff"/>
+        <path d="M13.125 10.625h-3.373125a3.125 3.125 0 0 1 -2.56 -1.333125l-0.32125000000000004 -0.45875A3.125 3.125 0 0 0 4.310625 7.5H1.875" 
+              stroke="#F44336" 
+              stroke-width="1" 
+              stroke-linecap="round" 
+              stroke-linejoin="round"
+              fill="none"/>
+        <path d="M13.125 4.375h-3.3718749999999997a3.125 3.125 0 0 0 -2.56125 1.3343749999999999l-0.31875 0.45625A3.125 3.125 0 0 1 4.3125 7.5H1.875" 
+              stroke="#F44336" 
+              stroke-width="2" 
+              stroke-linecap="round" 
+              stroke-linejoin="round"
+              fill="none"/>
+        <path d="m11.25 6.25 1.875 -1.875 -1.875 -1.875" 
+              stroke="#F44336" 
+              stroke-width="2"
+              stroke-linecap="round" 
+              stroke-linejoin="round"
+              fill="none"/>
+        <path d="m11.25 12.5 1.875 -1.875 -1.875 -1.875" 
+              stroke="#F44336" 
+              stroke-width="1" 
+              stroke-linecap="round" 
+              stroke-linejoin="round"
+              fill="none"/>
+    </g>
 </svg>
