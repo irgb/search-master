@@ -1,4 +1,4 @@
-# Smart Search
+# Search Master
 ![Cover](./assets/cover.png)
 
 A Chrome extension that intelligently routes your searches between multiple search engines (Google, Bing, ChatGPT, Perplexity) based on your preferences, making web searches more efficient.
@@ -16,15 +16,15 @@ A Chrome extension that intelligently routes your searches between multiple sear
 ## Demo
 ![Demo](./assets/demo.png)
 
-You can also watch our [demo video](https://www.youtube.com/watch?v=5U-27zr90BQ) to see Smart Search in action.
+You can also watch our [demo video](https://www.youtube.com/watch?v=5U-27zr90BQ) to see Search Master in action.
 
 ## Installation
 
-You can install Smart Search in two ways:
+You can install Search Master in two ways:
 
 ### Option 1: Chrome Web Store (Recommended)
 
-1. Visit the [Smart Search page](https://chromewebstore.google.com/detail/smart-search/afdjfknkcnildioigkobmbjakfnggolp) on the Chrome Web Store
+1. Visit the [Search Master page](https://chromewebstore.google.com/detail/search-master/afdjfknkcnildioigkobmbjakfnggolp) on the Chrome Web Store
 2. Click "Add to Chrome" to install the extension
 3. The extension will be automatically installed and ready to use
 
@@ -32,7 +32,7 @@ You can install Smart Search in two ways:
 
 For developers or users who want to install from source:
 
-1. Go to the [Releases](https://github.com/irgb/smart-search/tags) page
+1. Go to the [Releases](https://github.com/irgb/search-master/tags) page
 2. Download the source code (zip) from the latest release
 3. Extract the zip file to a folder on your computer
 4. Open Chrome and go to `chrome://extensions/`
@@ -41,7 +41,7 @@ For developers or users who want to install from source:
 
 ## Usage
 
-Smart Search provides two ways to choose your search engine:
+Search Master provides two ways to choose your search engine:
 
 1. **Query Length Based Selection**:
    - Short queries use your default search engine (Google or Bing)
@@ -94,7 +94,7 @@ Note:
 
 ## Support
 
-If you encounter any issues or have suggestions, please [open an issue](https://github.com/irgb/smart-search/issues) on GitHub.
+If you encounter any issues or have suggestions, please [open an issue](https://github.com/irgb/search-master/issues) on GitHub.
 
 ## License
 

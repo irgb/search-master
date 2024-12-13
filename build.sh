@@ -12,7 +12,7 @@ mkdir -p dist
 
 # Create zip file for Chrome Web Store
 echo "🗜️ Creating zip file..."
-zip -r "dist/smart-search-v$VERSION.zip" \
+zip -r "dist/search-master-v$VERSION.zip" \
     manifest.json \
     popup.html \
     popup.js \
@@ -21,6 +21,6 @@ zip -r "dist/smart-search-v$VERSION.zip" \
     suggest.js \
     icons
 
-echo "✅ Build completed! The extension package is ready at dist/smart-search-v$VERSION.zip"
+echo "✅ Build completed! The extension package is ready at dist/search-master-v$VERSION.zip"
 echo "📦 Files included in the package:"
-unzip -l "dist/smart-search-v$VERSION.zip"
+unzip -l "dist/search-master-v$VERSION.zip"

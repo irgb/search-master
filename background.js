@@ -120,7 +120,7 @@ chrome.webNavigation.onBeforeNavigate.addListener(async (details) => {
     const url = new URL(details.url);
     
     // Skip if already processed
-    if (url.searchParams.get('redirected_by_smart_search')) return;
+    if (url.searchParams.get('redirected_by_search_master')) return;
 
     // Only handle Google searches
     if (url.hostname !== 'www.google.com' || !url.pathname.startsWith('/search')) return;
@@ -145,11 +145,11 @@ chrome.webNavigation.onBeforeNavigate.addListener(async (details) => {
       redirectUrl = `https://www.bing.com/search?q=${encodeURIComponent(cleanQuery)}`;
     } else {
       // Use Google search
-      redirectUrl = `https://www.google.com/search?q=${encodeURIComponent(cleanQuery)}&redirected_by_smart_search=true`;
+      redirectUrl = `https://www.google.com/search?q=${encodeURIComponent(cleanQuery)}&redirected_by_search_master=true`;
     }
     
     chrome.tabs.update(details.tabId, { url: redirectUrl });
   } catch (error) {
-    console.error('Error in Smart Search:', error);
+    console.error('Error in Search Master:', error);
   }
 });

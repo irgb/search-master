@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
-  "name": "Smart Search",
-  "version": "1.2.0",
+  "name": "Search Master",
+  "version": "1.3.0",
   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsOcnDJr794doKyjosCHx9F6AqphEdRUDvn4JNJdqOqb2Q8qt9MafuZ3ao/OcK/4S9oTun/yiUFokMe+JCCTe/Nfc0rjRpZH4sVjTldcUwAfVTuuBRLcIjdVNx1TxsYoCDejf9/szS4DjnDpF/OKaEL/TNJ6Sj5cUt0AL/ZxoVAMLNYTuCipJkw5m6Um4w5XFPg9IeEjOmZB4FpXRmk4/kPw1+dkNHYs3PS8Txwgxk/a1vQ6bCer8hKUsAfYx1aujNjoXRkCjvjopNNl+aLgq8zkI+lYQEx3Dq3rH/r45HM8rxgp8DqIHX/OcPxjmnkuuQHGNuPRNqVt7u+D2RfNy8wIDAQAB",
   "description": "Intelligently routes searches between multiple search engines (Google, Bing, ChatGPT, Perplexity) based on your preferences",
   "permissions": [
