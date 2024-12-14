@@ -1,34 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg width="48" height="48" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
-    <!-- 放大镜圆环 -->
-    <circle cx="55" cy="55" r="45" fill="none" stroke="#4285f4" stroke-width="20"/>
-    
-    <!-- 放大镜手柄 -->
+      <!-- 放大镜手柄 -->
     <line x1="90" y1="90" x2="118" y2="118" stroke="#4285f4" stroke-width="20" stroke-linecap="round"/>
-    
+
+    <!-- 放大镜圆环 -->
+    <circle cx="55" cy="55" r="45" fill="none" stroke="#FFB207" stroke-width="20"/>
+
     <!-- 分叉箭头 - 在圆环内部，调整大小和位置 -->
-    <g transform="translate(28, 28) scale(3.5)">
-        <path d="M64 20 L64 50 L48 50 L48 108 L80 108 L80 50 L64 50" fill="#fff"/>
+    <g transform="translate(24, 28) scale(4, 4)">
         <path d="M13.125 10.625h-3.373125a3.125 3.125 0 0 1 -2.56 -1.333125l-0.32125000000000004 -0.45875A3.125 3.125 0 0 0 4.310625 7.5H1.875" 
-              stroke="#F44336" 
+              stroke="#FF0000" 
               stroke-width="1" 
               stroke-linecap="round" 
               stroke-linejoin="round"
               fill="none"/>
         <path d="M13.125 4.375h-3.3718749999999997a3.125 3.125 0 0 0 -2.56125 1.3343749999999999l-0.31875 0.45625A3.125 3.125 0 0 1 4.3125 7.5H1.875" 
-              stroke="#F44336" 
+              stroke="#00CC00" 
               stroke-width="2" 
               stroke-linecap="round" 
               stroke-linejoin="round"
               fill="none"/>
         <path d="m11.25 6.25 1.875 -1.875 -1.875 -1.875" 
-              stroke="#F44336" 
+              stroke="#00CC00" 
               stroke-width="2"
               stroke-linecap="round" 
               stroke-linejoin="round"
               fill="none"/>
         <path d="m11.25 12.5 1.875 -1.875 -1.875 -1.875" 
-              stroke="#F44336" 
+              stroke="#FF0000" 
               stroke-width="1" 
               stroke-linecap="round" 
               stroke-linejoin="round"
