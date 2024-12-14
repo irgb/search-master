@@ -16,7 +16,7 @@ A Chrome extension that intelligently routes your searches between multiple sear
 ## Demo
 ![Demo](./assets/demo.png)
 
-You can also watch our [demo video](https://www.youtube.com/watch?v=5U-27zr90BQ) to see Search Master in action.
+You can also watch our [demo video](https://www.youtube.com/watch?v=rYYtY0F76uM) to see Search Master in action.
 
 ## Installation
 
